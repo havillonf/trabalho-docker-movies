@@ -1,0 +1,64 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=movies
+    ports:
+      - "5432:5432"
+    networks:
+        - minionetwork
+
+  spring-boot-app:
+      build:
+        context: ./Back
+        dockerfile: Dockerfile
+      ports:
+        - "8080:8080"
+      depends_on:
+        - postgres
+        - minio
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+        - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/movies
+        - SPRING_DATASOURCE_USERNAME=postgres
+        - SPRING_DATASOURCE_PASSWORD=postgres
+        - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+      networks:
+        - minionetwork
+
+  react-app:
+      build:
+        context: ./Front
+        dockerfile: Dockerfile
+      ports:
+        - "5173:5173"
+      networks:
+        - minionetwork
+
+  minio:
+    image: docker.io/bitnami/minio:2022
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    networks:
+      - minionetwork
+    volumes:
+      - 'minio_data:/data'
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+      - MINIO_DEFAULT_BUCKETS=movies
+
+networks:
+  minionetwork:
+    driver: bridge
+
+volumes:
+  minio_data:
+    driver: local
