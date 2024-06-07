@@ -24,6 +24,8 @@ Feita a configuração do bucket, agora o sistema estará funcionando corretamen
 
 4. Observações
 
-O sistema gera logs que são armazenados no DynamoDB, essa tabela não foi criada dentro da conta da Academy pois estava apresentando problemas, então tivemos que criar externamente. Esses logs não são exibidos no sistema, mas é possível vê-los (e uma demostração do sistema como um todo) [clicando aqui](https://www.example.com).
+O sistema gera logs que são armazenados no DynamoDB, essa tabela não foi criada dentro da conta da Academy pois estava apresentando problemas, então tivemos que criar externamente. Esses logs não são exibidos no sistema, mas é possível vê-los (e uma demostração do sistema como um todo) [clicando aqui](https://drive.google.com/file/d/12agyoeEvi-cxUDYZfuhrvEHW_MhHnFp0/view?usp=sharing).
 
 Segue também o [link do repositório](https://www.github.com/havillonf/trabalho-docker-movies)
+
+Nessa versão do sistema as variáveis de ambiente das credenciais da AWS não estão presentes, por questões de segurança. A versão com as variáveis corretamente declaradas está no SIGAA.
